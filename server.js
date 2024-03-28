@@ -1,30 +1,16 @@
 const express = require('express');
 const dotenv = require('dotenv');
 
+// Route files
+const todos = require('./routes/todos');
+
 // Load env vars
 dotenv.config({ path: './config/config.env' });
 
 const app = express();
 
-app.get('/api/v1/todos', (req, res) => {
-  res.status(200).json({ success: true, msg: 'Show all todos' });
-});
-
-app.get('/api/v1/todos/:id', (req, res) => {
-  res.status(200).json({ success: true, msg: `Show todo ${req.params.id}` });
-});
-
-app.post('/api/v1/todos', (req, res) => {
-  res.status(200).json({ success: true, msg: 'Create new todo' });
-});
-
-app.put('/api/v1/todos/:id', (req, res) => {
-  res.status(200).json({ success: true, msg: `Update todo ${req.params.id}` });
-});
-
-app.delete('/api/v1/todos/:id', (req, res) => {
-  res.status(200).json({ success: true, msg: `Delete todo ${req.params.id}` });
-});
+// Mount routers
+app.use('/api/v1/todos', todos);
 
 const PORT = process.env.PORT || 5000;
 
