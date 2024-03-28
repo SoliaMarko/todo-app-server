@@ -1,4 +1,5 @@
 const express = require('express');
+const router = express.Router();
 const {
   getTodos,
   getTodo,
@@ -6,8 +7,6 @@ const {
   updateTodo,
   deleteTodo,
 } = require('../controllers/todos');
-
-const router = express.Router();
 
 router
   .route('/')

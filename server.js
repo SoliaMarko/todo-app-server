@@ -1,21 +1,19 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-
-// Route files
+const connectDB = require('./config/db');
 const todos = require('./routes/todos');
 
-// Load env vars
 dotenv.config({ path: './config/config.env' });
+
+connectDB();
 
 const app = express();
 
-// Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Mount routers
 app.use('/api/v1/todos', todos);
 
 const PORT = process.env.PORT || 5000;
