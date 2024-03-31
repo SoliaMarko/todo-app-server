@@ -14,7 +14,7 @@ const TaskSchema = new mongoose.Schema({
     trim: true,
     enum: ['low', 'medium', 'high', 'critical'],
   },
-  deadlines: {
+  deadline: {
     type: Date,
     required: [true, 'Date is required'],
   },
@@ -26,8 +26,8 @@ const TaskSchema = new mongoose.Schema({
     },
   ],
   finishedTime: {
-    type: date,
+    type: Date,
   },
 });
 
-export default TaskSchema;
+module.exports = mongoose.model('Task', TaskSchema);

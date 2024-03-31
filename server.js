@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use('/api/v1/tasks', tasks);
+app.use(`/api/v${process.env.VERSION}/tasks`, tasks);
 
 const PORT = process.env.PORT || 5000;
 
@@ -27,6 +27,5 @@ const server = app.listen(
 process.on('unhandledRejection', (err, promise) => {
   console.log(`Error: ${err.message}`);
 
-  // Close server and excit process
   server.close(() => process.exit(1));
 });

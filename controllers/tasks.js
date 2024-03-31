@@ -1,7 +1,14 @@
+const Task = require('../models/task.model');
+
 // @desc    Get all tasks
 // @route   GET /api/v1/tasks
-exports.getTasks = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'Show all tasks' });
+exports.getTasks = async (req, res, next) => {
+  try {
+    const tasks = await Task.find();
+    res.status(200).json({ success: true, data: tasks });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Get single task
