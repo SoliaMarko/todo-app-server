@@ -26,8 +26,8 @@ const TaskSchema = new mongoose.Schema({
     },
   ],
   finishedTime: {
-    type: date,
+    type: Date,
   },
 });
 
-export default TaskSchema;
+module.exports = TaskSchema;
