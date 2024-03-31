@@ -13,8 +13,16 @@ exports.getTasks = async (req, res, next) => {
 
 // @desc    Get single task
 // @route   GET /api/v1/tasks/:id
-exports.getTask = (req, res, next) => {
-  res.status(200).json({ success: true, msg: `Show task ${req.params.id}` });
+exports.getTask = async (req, res, next) => {
+  try {
+    const task = await Task.findById(req.params.id);
+    if (!task) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({ success: true, data: task });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Create new task
