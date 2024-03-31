@@ -38,12 +38,31 @@ exports.createTask = async (req, res, next) => {
 
 // @desc    Update task
 // @route   PUT /api/v1/tasks/:id
-exports.updateTask = (req, res, next) => {
-  res.status(200).json({ success: true, msg: `Update task ${req.params.id}` });
+exports.updateTask = async (req, res, next) => {
+  try {
+    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!task) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({ success: true, data: task });
+  } catch (err) {
+    res.status(200).json({ success: false });
+  }
 };
 
 // @desc    Delete task
 // @route   DELETE /api/v1/tasks/:id
-exports.deleteTask = (req, res, next) => {
-  res.status(200).json({ success: true, msg: `Delete task ${req.params.id}` });
+exports.deleteTask = async (req, res, next) => {
+  try {
+    const task = await Task.findByIdAndDelete(req.params.id);
+    if (!task) {
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({ success: true, data: {} });
+  } catch (err) {
+    res.status(200).json({ success: false });
+  }
 };
