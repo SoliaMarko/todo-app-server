@@ -19,8 +19,13 @@ exports.getTask = (req, res, next) => {
 
 // @desc    Create new task
 // @route   POST /api/v1/tasks
-exports.createTask = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'Create new task' });
+exports.createTask = async (req, res, next) => {
+  try {
+    const task = await Task.create(req.body);
+    res.status(201).json({ success: true, data: task });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Update task
