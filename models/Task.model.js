@@ -8,13 +8,19 @@ const TaskSchema = new mongoose.Schema({
     trim: true,
     maxLength: [500, 'Task can not be more than 500 characters'],
   },
+  status: {
+    type: Number,
+    required: [true],
+    default: 0,
+    enum: [0, 1],
+  },
   priority: {
-    type: String,
+    type: Number,
     required: [true, 'Priority is required'],
     trim: true,
-    enum: ['low', 'medium', 'high', 'critical'],
+    enum: [1, 2, 3, 4],
   },
-  deadlines: {
+  deadline: {
     type: Date,
     required: [true, 'Date is required'],
   },
@@ -22,7 +28,8 @@ const TaskSchema = new mongoose.Schema({
     {
       type: String,
       trim: true,
-      enum: ['study', 'work', 'family', 'fun', 'health'],
+      unique: true,
+      maxLength: [40, 'Tag can not be more than 40 characters'],
     },
   ],
   finishedTime: {
@@ -30,4 +37,4 @@ const TaskSchema = new mongoose.Schema({
   },
 });
 
-module.exports = TaskSchema;
+module.exports = mongoose.model('Task', TaskSchema);
