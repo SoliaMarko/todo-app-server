@@ -21,10 +21,10 @@ exports.getTask = (req, res, next) => {
 // @route   POST /api/v1/tasks
 exports.createTask = async (req, res, next) => {
   try {
-    const task = await Task.create(req.body);
+    const task = await Tasks.create(req.body);
     res.status(201).json({ success: true, data: task });
   } catch (err) {
-    res.status(400).json({ success: false });
+    res.status(400).json({ success: false, msg: err });
   }
 };
 

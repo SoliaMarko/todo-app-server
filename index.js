@@ -10,7 +10,6 @@ connectDB();
 
 const app = express();
 
-// Body parser
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'development') {
@@ -29,6 +28,5 @@ const server = app.listen(
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
   console.log(`Error: ${err.message}`);
-
   server.close(() => process.exit(1));
 });
