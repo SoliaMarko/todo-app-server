@@ -1,3 +1,4 @@
+const { success, clientError } = require('../constants/statusCodes.constant');
 const Tasks = require('../models/task.model');
 
 // @desc    Get all tasks
@@ -5,9 +6,9 @@ const Tasks = require('../models/task.model');
 exports.getTasks = async (req, res, next) => {
   try {
     const tasks = await Tasks.find();
-    res.status(200).json({ success: true, data: tasks });
+    res.status(success.OK).json({ success: true, data: tasks });
   } catch ({ message }) {
-    res.status(404).json({ success: false, message });
+    res.status(clientError.NOT_FOUND).json({ success: false, message });
   }
 };
 
@@ -17,11 +18,11 @@ exports.getTask = async (req, res, next) => {
   try {
     const task = await Tasks.findById(req.params.id);
     if (!task) {
-      return res.status(400).json({ success: false });
+      return res.status(clientError.NOT_FOUND).json({ success: false });
     }
-    res.status(200).json({ success: true, data: task });
+    res.status(success.OK).json({ success: true, data: task });
   } catch ({ message }) {
-    res.status(404).json({ success: false, message });
+    res.status(clientError.NOT_FOUND).json({ success: false, message });
   }
 };
 
@@ -30,9 +31,9 @@ exports.getTask = async (req, res, next) => {
 exports.createTask = async (req, res, next) => {
   try {
     const task = await Tasks.create(req.body);
-    res.status(201).json({ success: true, data: task });
+    res.status(success.CREATED).json({ success: true, data: task });
   } catch ({ message }) {
-    res.status(400).json({ success: false, message });
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
 
@@ -45,11 +46,11 @@ exports.updateTask = async (req, res, next) => {
       runValidators: true,
     });
     if (!task) {
-      return res.status(400).json({ success: false });
+      return res.status(clientError.BAD_REQUEST).json({ success: false });
     }
-    res.status(200).json({ success: true, data: task });
-  } catch (err) {
-    res.status(200).json({ success: false });
+    res.status(success.CREATED).json({ success: true, data: task });
+  } catch ({ message }) {
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
 
@@ -59,10 +60,10 @@ exports.deleteTask = async (req, res, next) => {
   try {
     const task = await Tasks.findByIdAndDelete(req.params.id);
     if (!task) {
-      return res.status(400).json({ success: false });
+      return res.status(clientError.BAD_REQUEST).json({ success: false });
     }
-    res.status(200).json({ success: true, data: {} });
+    res.status(success.OK).json({ success: true, data: {} });
   } catch (err) {
-    res.status(200).json({ success: false });
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
