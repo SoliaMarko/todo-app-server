@@ -39,6 +39,7 @@ const TaskSchema = new mongoose.Schema({
     {
       type: String,
       trim: true,
+      unique: true,
       maxLength: [MAX_TAG_LENGTH, TAG_MAX_LENGHT_ERROR],
     },
   ],
