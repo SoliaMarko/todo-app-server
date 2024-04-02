@@ -1,7 +1,14 @@
+const Tasks = require('../models/Task.model');
+
 // @desc    Get all tasks
 // @route   GET /api/v1/tasks
-exports.getTasks = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'Show all tasks' });
+exports.getTasks = async (req, res, next) => {
+  try {
+    const tasks = await Tasks.find();
+    res.status(200).json({ success: true, count: tasks.length, data: tasks });
+  } catch (err) {
+    res.status(400).json({ success: false });
+  }
 };
 
 // @desc    Get single task
@@ -12,8 +19,13 @@ exports.getTask = (req, res, next) => {
 
 // @desc    Create new task
 // @route   POST /api/v1/tasks
-exports.createTask = (req, res, next) => {
-  res.status(200).json({ success: true, msg: 'Create new task' });
+exports.createTask = async (req, res, next) => {
+  try {
+    const task = await Tasks.create(req.body);
+    res.status(201).json({ success: true, data: task });
+  } catch (err) {
+    res.status(400).json({ success: false, msg: err });
+  }
 };
 
 // @desc    Update task
