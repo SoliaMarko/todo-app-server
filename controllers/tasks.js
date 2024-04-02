@@ -1,4 +1,4 @@
-const Tasks = require('../models/Task.model');
+const Tasks = require('../models/task.model');
 
 // @desc    Get all tasks
 // @route   GET /api/v1/tasks
@@ -40,7 +40,7 @@ exports.createTask = async (req, res, next) => {
 // @route   PUT /api/v1/tasks/:id
 exports.updateTask = async (req, res, next) => {
   try {
-    const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+    const task = await Tasks.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
@@ -57,7 +57,7 @@ exports.updateTask = async (req, res, next) => {
 // @route   DELETE /api/v1/tasks/:id
 exports.deleteTask = async (req, res, next) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.id);
+    const task = await Tasks.findByIdAndDelete(req.params.id);
     if (!task) {
       return res.status(400).json({ success: false });
     }
