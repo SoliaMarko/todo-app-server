@@ -1,12 +1,23 @@
 const mongoose = require('mongoose');
+const {
+  TASK_REQUIRED_ERROR,
+  TASK_MAX_LENGTH_ERROR,
+  PRIORITY_REQUIRED_ERROR,
+  DATE_REQUIRED_ERROR,
+  TAG_MAX_LENGHT_ERROR,
+} = require('../constants/taskErrors.constant');
+const {
+  MAX_TASK_LENGTH,
+  MAX_TAG_LENGTH,
+} = require('../constants/constraints.constant');
 
 const TaskSchema = new mongoose.Schema({
   task: {
     type: String,
-    required: [true, 'Task is required'],
+    required: [true, TASK_REQUIRED_ERROR],
     unique: true,
     trim: true,
-    maxLength: [500, 'Task can not be more than 500 characters'],
+    maxLength: [MAX_TASK_LENGTH, TASK_MAX_LENGTH_ERROR],
   },
   status: {
     type: Number,
@@ -16,20 +27,20 @@ const TaskSchema = new mongoose.Schema({
   },
   priority: {
     type: Number,
-    required: [true, 'Priority is required'],
+    required: [true, PRIORITY_REQUIRED_ERROR],
     trim: true,
     enum: [1, 2, 3, 4],
   },
   deadline: {
     type: Date,
-    required: [true, 'Date is required'],
+    required: [true, DATE_REQUIRED_ERROR],
   },
   tags: [
     {
       type: String,
       trim: true,
       unique: true,
-      maxLength: [40, 'Tag can not be more than 40 characters'],
+      maxLength: [MAX_TAG_LENGTH, TAG_MAX_LENGHT_ERROR],
     },
   ],
   finishedTime: {
