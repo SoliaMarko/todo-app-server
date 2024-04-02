@@ -1,11 +1,11 @@
-const Task = require('../models/task.model');
+const Tasks = require('../models/Task.model');
 
 // @desc    Get all tasks
 // @route   GET /api/v1/tasks
 exports.getTasks = async (req, res, next) => {
   try {
-    const tasks = await Task.find();
-    res.status(200).json({ success: true, data: tasks });
+    const tasks = await Tasks.find();
+    res.status(200).json({ success: true, count: tasks.length, data: tasks });
   } catch (err) {
     res.status(400).json({ success: false });
   }
