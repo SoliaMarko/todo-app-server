@@ -1,5 +1,3 @@
-const Task = require('../models/Task');
-
 // @desc    Get all tasks
 // @route   GET /api/v1/tasks
 exports.getTasks = (req, res, next) => {
