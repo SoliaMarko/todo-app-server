@@ -8,7 +8,7 @@ exports.getTasks = async (req, res, next) => {
     const tasks = await Tasks.find();
     res.status(success.OK).json({ success: true, data: tasks });
   } catch ({ message }) {
-    res.status(clientError.NOT_FOUND).json({ success: false, message });
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
 
@@ -22,7 +22,7 @@ exports.getTask = async (req, res, next) => {
     }
     res.status(success.OK).json({ success: true, data: task });
   } catch ({ message }) {
-    res.status(clientError.NOT_FOUND).json({ success: false, message });
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
 
@@ -50,7 +50,7 @@ exports.updateTask = async (req, res, next) => {
     }
     res.status(success.CREATED).json({ success: true, data: task });
   } catch ({ message }) {
-    res.status(clientError.NOT_FOUND).json({ success: false, message });
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
 
@@ -63,7 +63,7 @@ exports.deleteTask = async (req, res, next) => {
       return res.status(clientError.NOT_FOUND).json({ success: false });
     }
     res.status(success.OK).json({ success: true, data: {} });
-  } catch (err) {
-    res.status(clientError.NOT_FOUND).json({ success: false, message });
+  } catch ({ message }) {
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
