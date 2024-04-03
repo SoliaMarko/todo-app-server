@@ -1,5 +1,5 @@
 const { success, clientError } = require('../constants/statusCodes.constant');
-const Tasks = require('../models/task.model');
+const Tasks = require('../models/Task.model');
 
 // @desc    Get all tasks
 // @route   GET /api/v1/tasks
@@ -8,7 +8,7 @@ exports.getTasks = async (req, res, next) => {
     const tasks = await Tasks.find();
     res.status(success.OK).json({ success: true, data: tasks });
   } catch ({ message }) {
-    res.status(clientError.NOT_FOUND).json({ success: false, message });
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
 
@@ -22,7 +22,7 @@ exports.getTask = async (req, res, next) => {
     }
     res.status(success.OK).json({ success: true, data: task });
   } catch ({ message }) {
-    res.status(clientError.NOT_FOUND).json({ success: false, message });
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
 
@@ -46,7 +46,7 @@ exports.updateTask = async (req, res, next) => {
       runValidators: true,
     });
     if (!task) {
-      return res.status(clientError.BAD_REQUEST).json({ success: false });
+      return res.status(clientError.NOT_FOUND).json({ success: false });
     }
     res.status(success.CREATED).json({ success: true, data: task });
   } catch ({ message }) {
@@ -60,10 +60,10 @@ exports.deleteTask = async (req, res, next) => {
   try {
     const task = await Tasks.findByIdAndDelete(req.params.id);
     if (!task) {
-      return res.status(clientError.BAD_REQUEST).json({ success: false });
+      return res.status(clientError.NOT_FOUND).json({ success: false });
     }
     res.status(success.OK).json({ success: true, data: {} });
-  } catch (err) {
+  } catch ({ message }) {
     res.status(clientError.BAD_REQUEST).json({ success: false, message });
   }
 };
