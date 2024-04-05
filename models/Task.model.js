@@ -32,7 +32,7 @@ const TaskSchema = new mongoose.Schema({
   tags: [
     {
       type: String,
-      trim: true,
+      enum: [1, 2, 3, 4, 5],
     },
   ],
   finishedTime: {
