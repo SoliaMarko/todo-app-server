@@ -16,7 +16,7 @@ const TaskSchema = new mongoose.Schema({
   status: {
     type: Number,
     required: [true],
-    default: 0,
+    default: 1,
     enum: [1, 2, 3],
   },
   priority: {
