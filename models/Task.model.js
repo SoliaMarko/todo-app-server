@@ -31,7 +31,7 @@ const TaskSchema = new mongoose.Schema({
   },
   tags: [
     {
-      type: String,
+      type: Number,
       enum: [1, 2, 3, 4, 5],
     },
   ],
