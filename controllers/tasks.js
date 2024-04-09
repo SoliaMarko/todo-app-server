@@ -54,6 +54,26 @@ exports.updateTask = async (req, res, next) => {
   }
 };
 
+// @desc    Update task status
+// @route   PATCH /api/v1/tasks/:id
+exports.updateTaskStatus = async (req, res, next) => {
+  try {
+    const task = await Tasks.findById(req.params.id);
+    if (!task) {
+      return res.status(clientError.NOT_FOUND).json({ success: false });
+    }
+    task.status = req.body.status;
+    await task.save();
+    res.status(success.OK).json({
+      success: true,
+      data: task,
+      message: 'Status has been successfully updated',
+    });
+  } catch ({ message }) {
+    res.status(clientError.BAD_REQUEST).json({ success: false, message });
+  }
+};
+
 // @desc    Delete task
 // @route   DELETE /api/v1/tasks/:id
 exports.deleteTask = async (req, res, next) => {
