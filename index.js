@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: 'https://todo-4i4ryftos-solomiias-projects-c8cf0fed.vercel.app',
+    origin: process.env.ORIGIN,
     methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
   })
 );
